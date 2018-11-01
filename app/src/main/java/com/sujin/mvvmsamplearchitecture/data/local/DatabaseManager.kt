@@ -10,5 +10,18 @@ class DatabaseManager @Inject constructor(context: Context) {
 
     val instance = MVVMDatabase.getInstance(context)
 
+    fun beginTransaction() {
+        instance.beginTransaction()
+    }
+
+    fun endTransaction() {
+        instance.setTransactionSuccessful()
+        instance.endTransaction()
+    }
+
+    fun dropDatabase() {
+        instance.clearAllTables()
+    }
+
     fun getPostDao(): PostDao = instance.getPostsDao()
 }

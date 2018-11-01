@@ -12,9 +12,12 @@ import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-@Module(includes = [
-    ApiModule::class
-])
+@Module(
+    includes = [
+        ApiModule::class,
+        PostsModule::class
+    ]
+)
 open class ApplicationModule {
 
     @Provides
