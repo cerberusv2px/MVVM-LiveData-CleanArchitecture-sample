@@ -1,0 +1,46 @@
+android {
+    flavorDimensions "default"
+
+    productFlavors {
+        client1 {
+            dimension "default"
+            applicationIdSuffix = ".c1"
+            def versionMajor = 1
+            def versionMinor = 0
+            def versionPatch = 0
+            versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
+            versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+            ext {
+                server = [debug   : "https://jsonplaceholder.typicode.com/",
+                          release : "https://jsonplaceholder.typicode.com/"
+                ]
+            }
+        }
+
+        client2 {
+            dimension "default"
+            applicationIdSuffix = ".c2"
+            def versionMajor = 1
+            def versionMinor = 0
+            def versionPatch = 0
+            versionCode versionMajor * 10000 + versionMinor * 100 + versionPatch
+            versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+            ext {
+                server = [debug   : "https://jsonplaceholder.typicode.com/",
+                          release : "https://jsonplaceholder.typicode.com/"
+                ]
+            }
+        }
+
+
+    }
+
+    applicationVariants.all { variant ->
+        def flavor = variant.productFlavors[0]
+        println "Setting up server URL ${flavor.ext.server[variant.buildType.name]} for variant [${variant.name}]"
+        variant.buildConfigField "String", "SERVER_URL", "\"${flavor.ext.server[variant.buildType.name]}\""
+        variant.outputs.all {
+            outputFileName = "mvvm-${project.name}-${flavor.name}-${variant.buildType.name}-${variant.versionCode}.apk"
+        }
+    }
+}
